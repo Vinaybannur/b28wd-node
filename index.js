@@ -10,7 +10,7 @@ import {moviesRouter} from "./routes/movies.js";
 dotenv.config();//all keys it will put in process.
 const app = express();
 
-const PORT = 9000;
+const PORT = process.env.PORT;
 //middleware 
 app.use(express.json());
 //express.json()-inbuilt middleware
