@@ -14,7 +14,7 @@ app.use(express.json());
 //express.json()-inbuilt middleware
 
 // const MONGO_URL = "mongodb://localhost";
-// const MONGO_URL = "mongodb+srv://vinay:welcome123@cluster0.355g4.mongodb.net";//hide this
+
 const MONGO_URL = process.env.MONGO_URL;
 
 // mongodb+srv://vinay:<password>@cluster0.355g4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
