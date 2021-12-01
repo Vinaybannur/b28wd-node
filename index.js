@@ -6,11 +6,17 @@ import { MongoClient } from "mongodb";
 import dotenv from 'dotenv';
 // import { createMovies, postMoviesById, getMoviesById, deleteMoviesById, putMoviesById } from "./helper.js";
 import {moviesRouter} from "./routes/movies.js";
+import cors from 'cors';
 
 dotenv.config();//all keys it will put in process.
 const app = express();
 
 const PORT = process.env.PORT;
+
+app.use(cors()) //cors - 3rd party middleware
+//every request in the app is allowed to access by any origine
+
+
 //middleware 
 app.use(express.json());
 //express.json()-inbuilt middleware
