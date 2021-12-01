@@ -1,4 +1,5 @@
 import { client } from "./index.js";
+import { ObjectId } from "mongodb";
 
 async function createMovies(filter) {
     return await client
@@ -16,21 +17,21 @@ async function createMovies(filter) {
     return await client
         .db("vinay")
         .collection("movies")
-        .findOne({ id: id });
+        .findOne({ _id: ObjectId(id) });
 }
 
  async function deleteMoviesById(id) {
     return await client
         .db("vinay")
         .collection("movies")
-        .deleteOne({ id: id });
+        .deleteOne({ _id: ObjectId(id) });
 }
 
  async function putMoviesById(id, data) {
     return await client
         .db("vinay")
         .collection("movies")
-        .updateOne({ id: id }, { $set: data });
+        .updateOne({ _id: ObjectId(id) }, { $set: data });
 }
 
 export { createMovies, postMoviesById, getMoviesById, deleteMoviesById, putMoviesById };
