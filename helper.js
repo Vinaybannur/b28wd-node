@@ -1,5 +1,7 @@
 import { client } from "./index.js";
 import { ObjectId } from "mongodb";
+import bcrypt from 'bcrypt';
+import { usersRouter } from "./routes/users.js";
 
 async function createMovies(filter) {
     return await client
@@ -34,4 +36,34 @@ async function createMovies(filter) {
         .updateOne({ _id: ObjectId(id) }, { $set: data });
 }
 
-export { createMovies, postMoviesById, getMoviesById, deleteMoviesById, putMoviesById };
+async function genPassword(password){
+    const NO_OF_ROUNDS = 10;
+    const salt = await bcrypt.genSalt(NO_OF_ROUNDS);
+    console.log(salt);
+    const hashedPassword = await bcrypt.hash(password,salt);
+    console.log(hashedPassword);
+    return hashedPassword;
+    }
+
+    //to create users
+
+    async function createUser(data) {
+        return await client.db("vinay").collection("user").insertOne(data);
+    }
+
+    async function getUserByName(username) {
+        return await client.db("vinay").collection("user").findOne({username:username});
+    }
+
+
+
+export { 
+    createMovies, 
+    postMoviesById, 
+    getMoviesById, 
+    deleteMoviesById, 
+    putMoviesById,
+    genPassword,
+    createUser,
+    getUserByName
+};

@@ -8,6 +8,8 @@ import dotenv from 'dotenv';
 import {moviesRouter} from "./routes/movies.js";
 import cors from 'cors';
 
+import { usersRouter } from "./routes/users.js";
+
 dotenv.config();//all keys it will put in process.
 const app = express();
 
@@ -41,6 +43,18 @@ export const client = await createConnection();
  });
 
 app.use("/movies",moviesRouter);
+app.use("/users",usersRouter);
+
+
+// async function genPassword(password){
+// const NO_OF_ROUNDS = 10;
+// const salt = await bcrypt.genSalt(NO_OF_ROUNDS);
+// console.log(salt);
+// const hashedPassword = await bcrypt.hash(password,salt);
+// console.log(hashedPassword);
+// return hashedPassword;
+// }
+
 
  app.listen(PORT,()=>console.log("App is started in",PORT));
 
