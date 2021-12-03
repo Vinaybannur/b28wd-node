@@ -1,10 +1,11 @@
 import express from "express";
 import{ createMovies, postMoviesById, getMoviesById, deleteMoviesById, putMoviesById } from "../helper.js"
+import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
 
 
-router.get("/",async(request,response)=>{
+router.get("/",auth,async(request,response)=>{
     //request query params
     console.log(request.query);
     // const {language,rating} = request.query;
@@ -27,14 +28,14 @@ router.get("/",async(request,response)=>{
     response.send(filtermovies);
 });
  
-router.post("/",async(request,response)=>{
+router.post("/",auth,async(request,response)=>{
     const data = request.body;
     //create movies - db.movies.insertMany(data)
     const result = await postMoviesById(data);
     response.send(result);
 })
 
-router.get("/:id",async(request,response)=>{
+router.get("/:id",auth,async(request,response)=>{
     console.log(request.params);
     const {id} = request.params;
  const movie = await getMoviesById(id);
@@ -43,7 +44,7 @@ router.get("/:id",async(request,response)=>{
    movie ? response.send(movie): response.status(404).send({message:"No matching movie found"})
 });
 
-router.delete("/:id",async(request,response)=>{
+router.delete("/:id",auth,async(request,response)=>{
     console.log(request.params);
     const {id} = request.params;
  const result = await deleteMoviesById(id);
@@ -53,7 +54,7 @@ router.delete("/:id",async(request,response)=>{
    : response.status(404).send({message:"No matching movie found"});
 });
 
-router.put("/:id",async(request,response)=>{
+router.put("/:id",auth,async(request,response)=>{
     console.log(request.params);
     const {id} = request.params;
     const data = request.body;
