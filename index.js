@@ -1,7 +1,7 @@
 //const { response } = require('express');//"type":"commonjs",
 // const express = require('express');
 // const { request } = require('http');
-import express from "express";//"type":"module", latest
+import express, { request, response } from "express";//"type":"module", latest
 import { MongoClient } from "mongodb";
 import dotenv from 'dotenv';
 // import { createMovies, postMoviesById, getMoviesById, deleteMoviesById, putMoviesById } from "./helper.js";
@@ -45,6 +45,52 @@ export const client = await createConnection();
 app.use("/movies",moviesRouter);
 app.use("/users",usersRouter);
 
+
+//Recipe
+// const recipes =[
+//     {
+//         picture:"https://www.vegrecipesofindia.com/wp-content/uploads/2020/01/paneer-butter-masala-1.jpg",
+//         name:"Panner butter malsala"
+//        },
+//       {
+//        picture:"https://res.cloudinary.com/swiggy/image/upload/f_auto,q_auto,fl_lossy/hna76wivgs286gad71zp",
+//         name:"Briyani"
+//        },
+//       {
+//        picture:"https://www.awesomecuisine.com/wp-content/uploads/2008/10/cauliflower-manchurian.jpg",
+//         name:"Gobi manchuri"
+//        },
+//       {
+//        picture:"https://static.toiimg.com/thumb/64696930.cms?width=1200&height=900",
+//         name:"Parotta shawarma"
+//        },
+//       {
+//        picture:"https://therecipecritic.com/wp-content/uploads/2020/08/Tandoori-Chicken-.png",
+//         name:"Chicken tandoori"
+//        }
+// ];
+
+app.get("/recipes",async(request,response)=>{
+
+    const result = await client
+    .db("vinay")
+    .collection("recipes")
+    .find({})
+    .toArray()
+
+    response.send(result);
+});
+
+app.post("/recipes",async(request,response)=>{
+    const data = request.body;
+
+    const result = await client
+    .db("vinay")
+    .collection("recipes")
+    .insertMany(data);
+    
+    response.send(result);
+});
 
 // async function genPassword(password){
 // const NO_OF_ROUNDS = 10;
